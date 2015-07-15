@@ -30,7 +30,6 @@ if __name__ == '__main__':
                     networks.remove(network)
                     known_networks.append(network)
             line = get_line(known_networks + networks)
-            print(line)
             ssid_log.write(line)
             ssid_log.flush()
-        time.sleep(1)
+        time.sleep(60)
