@@ -1,2 +1,5 @@
 # Nem kell a repóba a commit.log
 commit.log
+
+# Config fájlok ne nagyon menjenek fel
+*.conf
