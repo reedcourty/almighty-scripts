@@ -1,7 +1,8 @@
-#!python
+#!python3
 # -*- coding: UTF-8 -*-
 
 import datetime
+import logging
 import time
 import os
 
@@ -15,10 +16,30 @@ def get_line(networks):
 
 if __name__ == '__main__':
 
+    AP_LOGGER_PATH = os.path.dirname(os.path.abspath(__file__))
+    
+    SCRIPT_NAME = os.path.splitext(os.path.basename(__file__))[0]
+    DEFAULT_LOG_FILE = os.path.join(AP_LOGGER_PATH, "{}-{}.log".format(SCRIPT_NAME, datetime.datetime.now().strftime("%Y%m%d%H%M%S")))
+    
+    log_formatter = logging.Formatter("%(asctime)s -- %(levelname)s : %(name)s -- %(message)s")
+    
+    file_handler = logging.FileHandler(DEFAULT_LOG_FILE)
+    file_handler.setFormatter(log_formatter)
+    file_handler.setLevel(logging.DEBUG)
+    
+    console_handler = logging.StreamHandler()
+    console_handler.setFormatter(log_formatter)
+    console_handler.setLevel(logging.DEBUG)
+    
+    logging.basicConfig(level=logging.DEBUG, format=log_formatter, handlers=[file_handler, console_handler])
+    
+    logger = logging.getLogger(__name__)
+    logger.setLevel(logging.DEBUG)
+
     netshwlan = NetshWLAN()
 
     while True:
-        with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "SSID.{}.log".format(datetime.datetime.now().strftime("%Y-%m-%d"))), "a") as ssid_log:
+        with open(os.path.join(AP_LOGGER_PATH, "SSID.{}.log".format(datetime.datetime.now().strftime("%Y-%m-%d"))), "a") as ssid_log:
             networks = netshwlan.get_networks(mode="bssid", signal_limit=50)
             profiles = netshwlan.get_profiles()
             network_set = set([n.name for n in networks])
