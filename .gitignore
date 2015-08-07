@@ -3,3 +3,8 @@ commit.log
 
 # Config fájlok ne nagyon menjenek fel
 *.conf
+
+# ap_logger-ből nem kellenek a logok
+ap_logger/logs/*.log
+
+__pycache__
