@@ -59,5 +59,5 @@ if __name__ == '__main__':
                 ssid_log.write(line)
                 ssid_log.flush()
             time.sleep(60)
-    except Exception as e:
-        logger.critical(e)
+    except Exception as general_exception:
+        logger.critical(general_exception)
